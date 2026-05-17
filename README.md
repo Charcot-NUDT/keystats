@@ -1,5 +1,5 @@
 # Keystats - Linux 键盘活动监视器
-
+> 🌐 [English Version](./keystats-project/README.md)
 > 一个轻量级、注重隐私的 Linux 键盘活动统计工具。
 
 Keystats 在后台静默运行，记录你每天的按键次数。它追踪**每个按键的单独统计**（哪个键按了多少次）、小时分布、每日趋势等——所有数据都保存在本地 SQLite 数据库中。你的输入内容**永远不会被记录**，只保存计数。
