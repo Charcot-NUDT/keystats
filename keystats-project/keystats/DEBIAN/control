@@ -1,0 +1,20 @@
+Package: keystats
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python3 (>= 3.7), python3-evdev, systemd
+Recommends: sqlite3
+Maintainer: Your Name <your.email@example.com>
+Description: Lightweight keyboard activity monitor
+ Keystats is a minimal, system-wide keyboard statistics collector.
+ It runs as a background daemon and tracks daily keypress counts
+ without recording the actual content typed, ensuring privacy.
+ .
+ Features include:
+  - Real-time keypress counting via Linux evdev
+  - SQLite storage with minimal resource usage
+  - Daily, weekly, and all-time statistics
+  - Hourly activity breakdown
+  - Daily summary with insights
+  - systemd integration for auto-start

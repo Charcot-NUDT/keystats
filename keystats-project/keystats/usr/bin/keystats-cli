@@ -1,0 +1,3 @@
+#!/bin/bash
+# Wrapper script for keystats CLI
+exec python3 /usr/lib/keystats/cli.py "$@"

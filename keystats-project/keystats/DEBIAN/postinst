@@ -1,0 +1,54 @@
+#!/bin/bash
+set -e
+
+echo "Setting up keystats..."
+
+# Create required directories with proper permissions
+mkdir -p /var/lib/keystats
+mkdir -p /var/log/keystats
+
+# Set permissions - make readable/writable by all (since we run as root but CLI may be run by users)
+chmod 777 /var/lib/keystats
+chmod 777 /var/log/keystats
+
+# Set file permissions
+chmod 644 /etc/systemd/system/keystats.service
+chmod 755 /usr/bin/keystats-daemon
+chmod 755 /usr/bin/keystats-cli
+chmod 755 /usr/lib/keystats
+chmod 644 /usr/lib/keystats/*.py
+
+# Initialize database with correct permissions
+python3 -c "
+import sys
+sys.path.insert(0, '/usr/lib/keystats')
+from db import init_db
+init_db()
+print('Database initialized')
+"
+
+# Set database permissions so any user can read/write
+chmod 666 /var/lib/keystats/keystats.db 2>/dev/null || true
+
+# Reload systemd
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl daemon-reload
+    systemctl enable keystats.service
+    echo ""
+    echo "keystats installed successfully!"
+    echo ""
+    echo "Start the daemon:"
+    echo "  sudo systemctl start keystats"
+    echo ""
+    echo "View today's stats:"
+    echo "  keystats-cli"
+    echo ""
+    echo "Full daily summary:"
+    echo "  keystats-cli summary"
+    echo ""
+else
+    echo "Note: systemd not found."
+    echo "Run manually: sudo keystats-daemon --foreground"
+fi
+
+exit 0

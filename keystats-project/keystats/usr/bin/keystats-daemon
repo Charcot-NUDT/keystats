@@ -1,0 +1,3 @@
+#!/bin/bash
+# Wrapper script for keystats daemon
+exec python3 /usr/lib/keystats/daemon.py "$@"
